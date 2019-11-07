@@ -5,13 +5,52 @@ class Water{
     {
         $this->water=$water;
     }
-    public function make(string $image,string $filename =null)
+    public function make(string $image,string $filename =null,int $pos=3)
     {
         $this->checkImage($image);
         $res=$this->resource($image);
         $water=$this->resource($this->water);
-        imagecopy($res,$water,0,0,0,0,imagesx($water),imagesy($water));
-        return $this->showAction($image)($res,$filename??$image);
+        $position=$this->position($res,$image,$pos);
+        imagecopy($res,$water,$position['x'],$position['y'],0,0,imagesx($water),imagesy($water));
+        //return $this->showAction($image)($res,$filename??$image);
+        header('Content-type:image/jpeg');
+        return $this->showAction($image)($res);
+    }
+    protected function position($res,$water,$pos){
+        $info=['x'=>20,'y'=>20];
+        switch($pos){
+            case 1:
+            break;
+            case 2:
+            $info['x']=(imagesx($res)-imagesx($water))/2;
+            break;
+            case 3:
+            $info['x']=(imagesx($res)-imagesx($water))-20;
+            break;
+            case 4:
+            $info['y']=(imagesy($res)-imagesy($water))/2;
+            break;
+            case 5:
+            $info['x']=(imagesx($res)-imagesx($water))/2;
+            $info['y']=(imagesy($res)-imagesy($water))/2;
+            break;
+            case 6:
+            $info['x']=(imagesx($res)-imagesx($water))-20;
+            $info['y']=(imagesy($res)-imagesy($water))/2;
+            break;
+            case 7:
+            $info['y']=(imagesy($res)-imagesy($water))-20;
+            break;
+            case 8:
+            $info['x']=(imagesx($res)-imagesx($water))/2;
+            $info['y']=(imagesy($res)-imagesy($water))-20;
+            break;
+            case 9:
+            $info['x']=(imagesx($res)-imagesx($water))-20;
+            $info['y']=(imagesy($res)-imagesy($water))-20;
+            break;
+
+        }
     }
     protected function checkImage($image){
         if(!is_file($image)||getimagesize($image)===false){
