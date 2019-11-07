@@ -1,9 +1,16 @@
 <?php
 class Water{
+    protected $water;
+    public function __construct(string $water)
+    {
+        $this->water=$water;
+    }
     public function make(string $image,string $filename =null)
     {
         $this->checkImage($image);
         $res=$this->resource($image);
+        $water=$this->resource($this->water);
+        imagecopy($res,$water,0,0,0,0,imagesx($water),imagesy($water));
         return $this->showAction($image)($res,$filename??$image);
     }
     protected function checkImage($image){
