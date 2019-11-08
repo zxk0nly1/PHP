@@ -1,8 +1,4 @@
 <?php
-/**
- * 
- * 图片不裁切自动缩放算法讲解
- * 
- *  宽度固定，高度自动
- *  布高=布宽/图宽*图高
- */
+include 'Thumb.php';
+$thumb=new Thumb;
+$thumb->make('1.jpeg',200,200);
