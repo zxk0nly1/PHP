@@ -13,10 +13,14 @@ class Users{
     public function getName(){
         return $this->name;
     }
+    public static function getClassName(){
+        return self::$classname;
+    }
 }
 $obj=new Users();
 $obj->setName('后盾人');
 echo $obj->say();
+$obj->getClassName();
 echo '<hr>';
 $lisi=new Users();
 $lisi->setName('李四');
