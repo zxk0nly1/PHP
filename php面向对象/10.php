@@ -48,12 +48,24 @@ class Model extends Query{
     {
         return isset($this->field[$name]);
     }
+    public function __call($name, $arguments)
+    {
+        $action='getAttribute'.$name;
+        if(method_exists($this,$action)){
+            return call_user_func_array([$this,$action],$arguments);
+        }
+    }
+}
+class User extends Model{
+    protected function getAttributeTel(int $len=9){
+        return substr($this->field['tel'],0,$len).'***';
+    }
 }
 try{
-    $user=new Model;
-    $user->all();
-    //unset($user->name);
-    var_dump(isset($user->title));
+    $user=new User;
+    $res=$user->all();
+    echo $user->tel();
+    // print_r($res);
 }catch(Exception $e){
     echo $e->getMessage();
 }
