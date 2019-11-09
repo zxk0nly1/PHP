@@ -53,7 +53,7 @@ try{
     $user=new Model;
     $user->all();
     //unset($user->name);
-    echo isset($user->age);
+    var_dump(isset($user->title));
 }catch(Exception $e){
     echo $e->getMessage();
 }
