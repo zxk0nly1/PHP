@@ -7,6 +7,7 @@ abstract class Query{
 }
 class Model extends Query{
     protected $field=[];
+    protected $deny=['name'];
     public function all(){
         $this->select();
       return $this->field;
@@ -36,12 +37,23 @@ class Model extends Query{
             throw new Exception('参数错误');
         }
     }
+    public function __unset($name)
+    {
+        if(!isset($this->field[$name])||in_array($name,$this->deny)){
+            throw new Exception('属性不存在或禁止操作');
+        }
+        $this->field[$name]='';
+    }
+    public function __isset($name)
+    {
+        return isset($this->field[$name]);
+    }
 }
 try{
-$user=new Model;
-$user->all();
-$user->tel='12345678900';
-echo $user->tel;
+    $user=new Model;
+    $user->all();
+    //unset($user->name);
+    echo isset($user->age);
 }catch(Exception $e){
     echo $e->getMessage();
 }
