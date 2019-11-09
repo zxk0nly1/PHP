@@ -55,6 +55,18 @@ class Model extends Query{
             return call_user_func_array([$this,$action],$arguments);
         }
     }
+    public static function __callStatic($name, $arguments)
+    {
+        switch($name){
+            case 'getAll':
+                return call_user_func_array([new static(),'all'],$arguments);
+            break;
+            default:
+            $obj=new static();
+            $obj->all();
+            return call_user_func([$obj,'__call'],$name,$arguments);
+        }
+    }
 }
 class User extends Model{
     protected function getAttributeTel(int $len=9){
@@ -62,9 +74,13 @@ class User extends Model{
     }
 }
 try{
-    $user=new User;
-    $res=$user->all();
-    echo $user->tel();
+    echo User::tel();
+    //如果这个静态方法不存在，就去调用这个魔术静态方法！
+    // User::abc();
+    // print_r(User::getAll());
+    // $user=new User;
+    // $res=$user->all();
+    // echo $user->tel();
     // print_r($res);
 }catch(Exception $e){
     echo $e->getMessage();
