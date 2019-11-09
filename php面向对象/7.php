@@ -14,9 +14,9 @@ class Topic {
     use Log,Comment{
         //替换方法
         Log::save insteadof Comment;
-        Comment::save as send;
+        // Log::save as protected;
+        Comment::save as protected send;
     }
 }
 $topic =new Topic;
-// echo $topic->save();
-echo $topic->send();
+echo $topic->save();
