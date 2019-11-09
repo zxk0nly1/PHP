@@ -1,22 +1,31 @@
 <?php
-
+trait Site{
+    public function getSiteName(){
+        return 'houdunren.com';
+    }
+}
 trait Log{
     public function save(){
         return __METHOD__;
     }
 }
 trait Comment{
+    use Site;
+    abstract public function name();
+    public static function show(){
+        return 'show...static';
+    }
     public function save(){
         return __METHOD__;
     }
 }
 class Topic {
     use Log,Comment{
-        //替换方法
         Log::save insteadof Comment;
-        // Log::save as protected;
         Comment::save as protected send;
     }
+    public function name(){}
 }
-$topic =new Topic;
-echo $topic->save();
+echo Topic::show();
+// $topic =new Topic;
+// echo $topic->getSiteName();
