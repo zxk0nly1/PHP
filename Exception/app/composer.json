@@ -1,0 +1,15 @@
+{
+    "name": "lenovo/app",
+    "authors": [
+        {
+            "name": "zxk0nly1",
+            "email": "1272667023@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "APP\\":"."
+        }
+    },
+    "require": {}
+}
